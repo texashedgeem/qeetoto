@@ -5,7 +5,7 @@ test.describe('Services pages', () => {
   test('Services listing page shows all 8 services', async ({ page }) => {
     await page.goto('/services');
     await expect(page.getByRole('heading', { name: 'Our Services' })).toBeVisible();
-    const cards = page.locator('a[href^="/services/"]');
+    const cards = page.locator('main a[href^="/services/"]');
     await expect(cards).toHaveCount(8);
   });
 
