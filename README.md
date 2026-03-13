@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Qeetoto
+
+Next.js 14 website for [qeetoto.io](https://qeetoto.io) — a port of consentwise.io into a new tech stack.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # dev server on http://localhost:3000
+npm run build    # production build
+npm test         # Playwright E2E tests (requires dev server running)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Post-Clone Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+After cloning, activate the commit hook:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git config core.hooksPath .githooks
+```
 
-## Learn More
+This enforces the required commit message format (see below). Without this step the hook will not run and non-conformant commits will not be caught locally.
 
-To learn more about Next.js, take a look at the following resources:
+## Commit Message Format
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All commits must follow this format:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+TYPE[!](QTO-NNN): short description
+```
 
-## Deploy on Vercel
+| Part | Values |
+|------|--------|
+| `TYPE` | `feat`, `fix`, `docs`, `test`, `chore`, `ci`, `style`, `refactor` |
+| `!` | Optional — marks a breaking change, triggers a major version bump |
+| `QTO-NNN` | Jira ticket reference |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Examples:**
+```
+feat(QTO-27): add Nav component with top-level links
+fix(QTO-33): correct VideoCard thumbnail aspect ratio
+docs(QTO-46): document developer onboarding steps in README
+feat!(QTO-1): release v1.0.0
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+
+- [Next.js 14](https://nextjs.org) — App Router
+- [Tailwind CSS](https://tailwindcss.com)
+- [TypeScript](https://www.typescriptlang.org)
+- [Vercel](https://vercel.com) — hosting
+- [Playwright](https://playwright.dev) — E2E testing
+
+## Project Structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+├── components/       # Shared React components
+└── lib/              # Data helpers (getVideos, getServices)
+content/
+├── videos/           # JSON files — one per video
+└── services/         # JSON files — one per service
+tests/
+└── e2e/pages/        # Playwright E2E tests
+```
