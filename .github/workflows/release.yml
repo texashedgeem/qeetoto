@@ -1,9 +1,12 @@
-name: Create Release on Push to Main
+name: Create Release
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: 'Optional release notes (appended to auto-generated changelog)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
